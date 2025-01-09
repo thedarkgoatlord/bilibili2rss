@@ -6,7 +6,13 @@ from datetime import datetime
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 
+options = Options()
+options.add_argument('--headless=new')  # 无头模式
+options.add_argument('--disable-gpu')  # 禁用 GPU 加速
+options.add_argument('--no-sandbox')  # 解决某些环境权限问题
+options.add_argument('--disable-dev-shm-usage')  # 优化共享内存使用
 import subprocess
 
 # 配置 ChromeDriver
