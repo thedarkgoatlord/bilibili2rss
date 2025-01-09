@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
 from datetime import datetime
-
+import subprocess
 
 # 配置 ChromeDriver
 service = Service('/Users/cliviaminiata/Bilibili_crawler/chromedriver')  # 替换为您的路径
@@ -62,7 +62,7 @@ for item in items:
     if pub_date:
         fe.pubDate(pub_date)
 # 输出 RSS 文件
-rss_file = '/Users/cliviaminiata/Documents/bilibili2rss/feed.xml'
+rss_file = 'feed.xml'
 rss_feed = fg.rss_str(pretty=True)
 with open(rss_file, 'wb') as f:
     f.write(rss_feed)
@@ -70,3 +70,17 @@ with open(rss_file, 'wb') as f:
 
 print(f'RSS feed 已生成: {rss_file}')
 driver.quit()
+
+
+# Git 操作
+try:
+    # 添加更改到暂存区
+    subprocess.run(['git', 'add', rss_file], check=True)
+    # 提交更改
+    commit_message = f"Auto-update RSS feed on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    subprocess.run(['git', 'commit', '-m', commit_message], check=True)
+    # 推送到远程仓库
+    subprocess.run(['git', 'push'], check=True)
+    print("RSS feed 已提交并推送到远程仓库。")
+except subprocess.CalledProcessError as e:
+    print(f"Git 操作失败: {e}")
