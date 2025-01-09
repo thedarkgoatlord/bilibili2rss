@@ -97,3 +97,17 @@ for uid in UIDs:
 
     print(f'RSS feed 已生成: {rss_file}')
     driver.quit()
+
+
+# Git 操作
+try:
+    # 添加更改到暂存区
+    subprocess.run(['git', 'add', rss_file], check=True)
+    # 提交更改
+    commit_message = f"Auto-update RSS feed on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+    subprocess.run(['git', 'commit', '-m', commit_message], check=True)
+    # 推送到远程仓库
+    subprocess.run(['git', 'push'], check=True)
+    print("RSS feed 已提交并推送到远程仓库。")
+except subprocess.CalledProcessError as e:
+    print(f"Git 操作失败: {e}")
