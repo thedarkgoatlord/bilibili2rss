@@ -78,7 +78,7 @@ for item in items:
     if pub_date:
         fe.pubDate(pub_date)
 # 输出 RSS 文件
-rss_file = 'feed.xml'
+rss_file = './output/478720594.xml'
 rss_feed = fg.rss_str(pretty=True)
 with open(rss_file, 'wb') as f:
     f.write(rss_feed)
