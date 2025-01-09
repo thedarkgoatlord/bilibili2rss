@@ -6,7 +6,7 @@ from datetime import datetime
 import subprocess
 
 # 配置 ChromeDriver
-service = Service('/Users/cliviaminiata/Bilibili_crawler/chromedriver')  # 替换为您的路径
+service = Service('./chromedriver')  # 替换为您的路径
 driver = webdriver.Chrome(service=service)
 
 url = 'https://space.bilibili.com/478720594/video'
