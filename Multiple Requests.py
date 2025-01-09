@@ -61,13 +61,21 @@ for uid in UIDs:
 
         # 将发布日期转换为 RSS 标准格式
         try:
+            current_year = datetime.now().year
             if pub_date_raw:
-                # 假设日期格式类似于 "2021-11-30"
-                pub_date = datetime.strptime(pub_date_raw, "%Y-%m-%d").strftime("%a, %d %b %Y 00:00:00 GMT")
+                if '-' in pub_date_raw:  # 检查是否为月-日格式
+                    parts = pub_date_raw.split('-')
+                    if len(parts) == 2:  # 月-日格式
+                        month, day = map(int, parts)
+                        pub_date = datetime(current_year, month, day).strftime("%a, %d %b %Y 00:00:00 GMT")
+                    else:  # 年-月-日格式
+                        pub_date = datetime.strptime(pub_date_raw, "%Y-%m-%d").strftime("%a, %d %b %Y 00:00:00 GMT")
+                else:
+                    pub_date = None  # 如果格式不明，保留为空
             else:
                 pub_date = None
         except ValueError:
-            pub_date = None  # 如果日期格式不匹配，保留为空
+            pub_date = None  # 处理异常情况
 
         # 提取缩略图
         img_element = item.select_one('img')
