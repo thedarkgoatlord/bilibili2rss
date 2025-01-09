@@ -7,10 +7,12 @@ import subprocess
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
+options = Options()
+options.add_argument('--headless')
 
 # 配置 ChromeDriver
 service = Service('./chromedriver')
-driver = webdriver.Chrome(service=service)
 
 # 读取 up 主列表
 UIDs = []
@@ -21,12 +23,10 @@ file.close()
 print("UIDs:",UIDs)
 
 for uid in UIDs:
-    driver = webdriver.Chrome(service=service)
+    driver = webdriver.Chrome(service=service,options=options)
     url = 'https://space.bilibili.com/'+uid+'/video'
     driver.get(url)
     print("getting url "+uid)
-    # 等待页面加载
-    driver.implicitly_wait(10000000)
 
     # 获取动态加载后的 HTML
     try:

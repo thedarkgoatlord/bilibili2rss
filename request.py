@@ -7,18 +7,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
-
-options = Options()
-options.add_argument('--headless=new')  # 无头模式
-options.add_argument('--disable-gpu')  # 禁用 GPU 加速
-options.add_argument('--no-sandbox')  # 解决某些环境权限问题
-options.add_argument('--disable-dev-shm-usage')  # 优化共享内存使用
 import subprocess
+options = Options()
+options.add_argument('--headless')
+
 
 # 配置 ChromeDriver
 service = Service('./chromedriver')  # 替换为您的路径
-driver = webdriver.Chrome(service=service)
-
+driver = webdriver.Chrome(service=service,options=options)
 url = 'https://space.bilibili.com/478720594/video'
 driver.get(url)
 
