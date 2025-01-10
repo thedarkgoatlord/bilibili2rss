@@ -16,7 +16,7 @@ service = Service('./chromedriver')
 
 # 读取 up 主列表
 UIDs = []
-with open("list_of_UID.txt",'r') as file:
+with open("./list_of_UID.txt",'r') as file:
     for line in file:
         UIDs.append(line[:-1])
 file.close()
