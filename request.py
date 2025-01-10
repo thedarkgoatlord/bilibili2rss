@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from bs4 import BeautifulSoup
 from feedgen.feed import FeedGenerator
-from datetime import datetime
+from datetime import datetime,timedelta
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -50,22 +50,36 @@ for item in items:
     pub_date_raw = date_element.text.strip() if date_element else None
 
     # 将发布日期补全并转换为 RSS 标准格式
+    # 提取发布日期
+    date_element = item.select_one('span.time')
+    pub_date_raw = date_element.text.strip() if date_element else None
+
+    # 将发布日期转换为 RSS 标准格式
     try:
         current_year = datetime.now().year
         if pub_date_raw:
-            if '-' in pub_date_raw:  # 检查是否为月-日格式
+            if '小时前' in pub_date_raw:  # 检查是否为 "X小时前" 格式
+                hours_ago = int(pub_date_raw.replace('小时前', '').strip())
+                pub_date = datetime.now() - timedelta(hours=hours_ago)
+            elif '-' in pub_date_raw:  # 检查是否为 "月-日" 或 "年-月-日" 格式
                 parts = pub_date_raw.split('-')
                 if len(parts) == 2:  # 月-日格式
                     month, day = map(int, parts)
-                    pub_date = datetime(current_year, month, day).strftime("%a, %d %b %Y 00:00:00 GMT")
-                else:  # 年-月-日格式
-                    pub_date = datetime.strptime(pub_date_raw, "%Y-%m-%d").strftime("%a, %d %b %Y 00:00:00 GMT")
+                    pub_date = datetime(current_year, month, day)
+                elif len(parts) == 3:  # 年-月-日格式
+                    pub_date = datetime.strptime(pub_date_raw, "%Y-%m-%d")
+                else:
+                    pub_date = None  # 无法识别的格式
             else:
-                pub_date = None  # 如果格式不明，保留为空
+                pub_date = None  # 格式不明
         else:
-            pub_date = None
-    except ValueError:
-        pub_date = None  # 处理异常情况
+            pub_date = None  # 如果没有时间信息
+
+        # 将日期转换为 RSS 标准格式（RFC 822 格式）
+        pub_date_rss = pub_date.strftime("%a, %d %b %Y %H:%M:%S GMT") if pub_date else None
+    except Exception as e:
+        print(f"解析发布日期出错: {e}")
+        pub_date_rss = None
 
     # 提取缩略图
     img_element = item.select_one('img')
