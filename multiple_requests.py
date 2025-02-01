@@ -18,7 +18,10 @@ service = Service('./chromedriver')
 UIDs = []
 with open("./list_of_UID.txt",'r') as file:
     for line in file:
-        UIDs.append(line[:-1])
+        if line[-1]=='\n':
+            UIDs.append(line[:-1])
+        else:
+            UIDs.append(line)
 file.close()
 print("UIDs:",UIDs)
 

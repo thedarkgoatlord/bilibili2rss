@@ -6,13 +6,7 @@
     <description>RSS feed for 2723234</description>
     <docs>http://www.rssboard.org/rss-specification</docs>
     <generator>python-feedgen</generator>
-    <lastBuildDate>Sat, 11 Jan 2025 04:41:19 +0000</lastBuildDate>
-    <item>
-      <title>白荆回廊四测，品鉴一下这个画风清奇的玩意</title>
-      <link>https://www.bilibili.com/video/BV1Me411o7Hr/</link>
-      <description>&lt;img src="https://i1.hdslb.com/bfs/archive/f46336c4ff259ee71f3a3ffc8f1a5850864edce5.jpg@320w_200h_1c_!web-space-upload-video.webp" alt="白荆回廊四测，品鉴一下这个画风清奇的玩意"&gt;&lt;br&gt;发布日期: 2023-12-10</description>
-      <pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate>
-    </item>
+    <lastBuildDate>Sat, 01 Feb 2025 02:29:12 +0000</lastBuildDate>
     <item>
       <title>这玩意对原作唯一的贡献就是让我补了遍番</title>
       <link>https://www.bilibili.com/video/BV1wN4y1h7bD/</link>
@@ -186,6 +180,12 @@
       <link>https://www.bilibili.com/video/BV1uiB5YFEX4/</link>
       <description>&lt;img src="https://i0.hdslb.com/bfs/archive/3fe6124b9dcf68dcba9cb953b45d8e8b625966cb.jpg@320w_200h_1c_!web-space-upload-video.webp" alt="无限暖暖公测试玩"&gt;&lt;br&gt;发布日期: 2024-12-14</description>
       <pubDate>Sat, 14 Dec 2024 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>我应该是最晚做异环首测视频的</title>
+      <link>https://www.bilibili.com/video/BV1iffQYhE5z/</link>
+      <description>&lt;img src="https://i2.hdslb.com/bfs/archive/d309275ecc0b95050d6bb2a5e2d193956e2c2fcc.jpg@320w_200h_1c_!web-space-upload-video.webp" alt="我应该是最晚做异环首测视频的"&gt;&lt;br&gt;发布日期: 1-28</description>
+      <pubDate>Tue, 28 Jan 2025 00:00:00 +0000</pubDate>
     </item>
   </channel>
 </rss>
