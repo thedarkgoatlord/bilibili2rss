@@ -42,7 +42,6 @@ for uid in UIDs:
     except Exception as e:
         print(f"等待加载时出错: {e}")
 
-    print(items)
     # 创建 RSS Feed
     fg = FeedGenerator()
     fg.title(uid+" RSS feed")
