@@ -32,21 +32,28 @@ for uid in UIDs:
     print("getting url "+uid)
 
     # 获取动态加载后的 HTML
-    try:
-        WebDriverWait(driver, 20).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'li.small-item'))
-        )
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
-        items = soup.select('li.small-item')
-    except Exception as e:
-        print(f"等待加载时出错: {e}")
+try:
+    WebDriverWait(driver, 20).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'li.small-item'))
+    )
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+    items = soup.select('li.small-item')
+    if not items:  # 如果没有找到任何 'li.small-item' 元素
+        print("未能找到任何视频项")
+except Exception as e:
+    print(f"等待加载时出错: {e}")
+    items = []  # 如果出错，确保 items 为空列表
+    print("items 为空，跳过当前 UID")
 
-    # 创建 RSS Feed
-    fg = FeedGenerator()
-    fg.title(uid+" RSS feed")
-    fg.link(href=url, rel='alternate')
-    fg.description('RSS feed for '+uid)
+# 创建 RSS Feed
+fg = FeedGenerator()
+fg.title(uid+" RSS feed")
+fg.link(href=url, rel='alternate')
+fg.description('RSS feed for '+uid)
+
+# 只有在 items 不为空时才继续处理
+if items:
     # 创建 RSS 项目
     for item in items:
         # 提取标题
@@ -100,6 +107,7 @@ for uid in UIDs:
 
         if pub_date_rss:
             fe.pubDate(pub_date_rss)
+
     # 输出 RSS 文件
     rss_file = './output/'+uid+'.xml'
     rss_feed = fg.rss_str(pretty=True)
@@ -107,6 +115,9 @@ for uid in UIDs:
         f.write(rss_feed)
 
     print(f'RSS feed 已生成: {rss_file}')
+    driver.quit()
+else:
+    print(f"跳过 UID {uid}，未能获取视频项")
     driver.quit()
 
 
